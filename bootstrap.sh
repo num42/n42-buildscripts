@@ -63,9 +63,11 @@ if [ -e "Cartfile" ]; then
   installDependencyWithBrew carthage
 fi
 
-# keep submodules up to date, see https://git-scm.com/book/en/v2/Git-Tools-Submodules
-git submodule init || echo "${RED} FAILED TO INIT SUBMODULES ${NOCOLOR}";
-git submodule update || echo "${RED} FAILED TO UPDATE SUBMODULES ${NOCOLOR}";
+if [ -e ".gitmodules" ]; then
+  # keep submodules up to date, see https://git-scm.com/book/en/v2/Git-Tools-Submodules
+  git submodule init || echo "${RED} FAILED TO INIT SUBMODULES ${NOCOLOR}";
+  git submodule update || echo "${RED} FAILED TO UPDATE SUBMODULES ${NOCOLOR}";
+fi
 
 if [ -e "fastlane/Fastfile" ]; then
   if bundle exec fastlane lanes | grep "match_all"; then
