@@ -98,3 +98,10 @@ if [ -e "fastlane/Fastfile" ]; then
     bundle exec fastlane ios match_all || echo "${RED} FAILED TO RUN MATCH ${NOCOLOR}";
   fi
 fi
+
+if [ -e "bootstrap-specialized.sh" ]; then
+  echo ""
+  echo  "${GREEN} RUNNING SPECIALIZED BOOTSTRAP SCRIPT  ${NOCOLOR}";
+
+  source bootstrap-specialized.sh
+fi
