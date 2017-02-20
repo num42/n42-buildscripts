@@ -22,8 +22,15 @@ if [[ $1 == "-u" ]] ; then
     exit 1
 fi
 
+# Guard to update brew only once and only if necessary
+NEEDS_TO_UPDATE_BREW=1
 
 installDependencyWithBrew(){
+  if [ $NEEDS_TO_UPDATE_BREW -eq 1 ]; then
+    # update brew to keep dependencies up to date
+    brew update || echo "${RED} FAILED TO UPDATE BREW ${NOCOLOR}";
+    NEEDS_TO_UPDATE_BREW=0
+  fi
   # install dependency, if is not installed
   brew list $1 || brew install $1 || echo "${RED} FAILED TO INSTALL $1 ${NOCOLOR}";
 
@@ -31,8 +38,6 @@ installDependencyWithBrew(){
   brew outdated $1 || brew upgrade $1 || echo "${RED} FAILED TO UPGRADE $1 ${NOCOLOR}";
 }
 
-# updaet brew to keep dependencies up to date
-brew update || echo "${RED} FAILED TO UPDATE BREW ${NOCOLOR}";
 
 installDependencyWithBrew rbenv
 installDependencyWithBrew ruby-build
