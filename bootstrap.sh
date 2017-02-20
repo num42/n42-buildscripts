@@ -46,10 +46,12 @@ if [ -e ".ruby-version" ]; then
   rbenv install -s
 fi
 
+if [ -e "Gemfile" ]; then
 
-# install bundler gem for ruby dependency management
-gem install bundler || echo "${RED} FAILED TO INSTALL BUNDLER ${NOCOLOR}";
-bundle install || echo "${RED} FAILED TO INSTALL BUNDLE ${NOCOLOR}";
+  # install bundler gem for ruby dependency management
+  gem install bundler || echo "${RED} FAILED TO INSTALL BUNDLER ${NOCOLOR}";
+  bundle install || echo "${RED} FAILED TO INSTALL BUNDLE ${NOCOLOR}";
+fi
 
 if [ -e "podfile" ]; then
   # install cocoapods dependencies
