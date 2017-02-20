@@ -38,12 +38,14 @@ installDependencyWithBrew(){
   brew outdated $1 || brew upgrade $1 || echo "${RED} FAILED TO UPGRADE $1 ${NOCOLOR}";
 }
 
+if [ -e ".ruby-version" ]; then
 
-installDependencyWithBrew rbenv
-installDependencyWithBrew ruby-build
+  installDependencyWithBrew rbenv
+  installDependencyWithBrew ruby-build
+  # install ruby version from .ruby-version, skipping if already installed (-s)
+  rbenv install -s
+fi
 
-# install ruby version from .ruby-version, skipping if already installed (-s)
-rbenv install -s
 
 # install bundler gem for ruby dependency management
 gem install bundler || echo "${RED} FAILED TO INSTALL BUNDLER ${NOCOLOR}";
