@@ -59,7 +59,9 @@ if [ -e "podfile" ]; then
   bundle exec pod install || echo "${RED} FAILED TO INSTALL PODS ${NOCOLOR}";
 fi
 
-installDependencyWithBrew carthage
+if [ -e "Cartfile" ]; then
+  installDependencyWithBrew carthage
+fi
 
 # keep submodules up to date, see https://git-scm.com/book/en/v2/Git-Tools-Submodules
 git submodule init || echo "${RED} FAILED TO INIT SUBMODULES ${NOCOLOR}";
