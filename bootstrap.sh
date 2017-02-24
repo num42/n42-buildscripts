@@ -65,6 +65,15 @@ if [ -e "Gemfile" ]; then
   bundle install || echo "${RED} FAILED TO INSTALL BUNDLE ${NOCOLOR}";
 fi
 
+if [ -e "package.json" ]; then
+  echo ""
+  echo  "${GREEN} INSTALLING node-modules ${NOCOLOR}";
+
+  # install bundler gem for ruby dependency management
+  installDependencyWithBrew yarn || echo "${RED} FAILED TO INSTALL YARN ${NOCOLOR}";
+  yarn install || echo "${RED} FAILED TO INSTALL NODE-MODULES ${NOCOLOR}";
+fi
+
 if [ -e "podfile" ]; then
   echo ""
   echo  "${GREEN} RUNNING COCOAPODS ${NOCOLOR}";
