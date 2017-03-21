@@ -105,3 +105,9 @@ if [ -e "bootstrap-specialized.sh" ]; then
 
   source bootstrap-specialized.sh
 fi
+
+
+for file in $(find ./*/ -name "bootstrap.sh" -maxdepth 1); do
+  cd $(dirname $file)
+  source "bootstrap.sh"
+done
