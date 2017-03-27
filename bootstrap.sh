@@ -3,24 +3,25 @@
 # exit script, if error
 set -e
 
-# defne colors
+# define colors
 RED=`tput setaf 1`
 GREEN=`tput setaf 2`
 NOCOLOR=`tput sgr0`
 
-BOOTSTRAP_SOURCE="https://raw.githubusercontent.com/num42/n42-ios-bootstrap-shell/master/bootstrap.sh"
+BOOTSTRAP_FILE="bootstrap.sh"
+BOOTSTRAP_SOURCE="https://raw.githubusercontent.com/num42/n42-ios-bootstrap-shell/master/${BOOTSTRAP_FILE}"
 
-echo "${GREEN}Running N42 Bootstrap v1.14 (2017-02-20)${NOCOLOR}"
+echo "${GREEN}Running N42 Bootstrap v1.15 (2017-03-27)${NOCOLOR}"
 echo "${GREEN}If the script fails, there might be a newer Version on $BOOTSTRAP_SOURCE ${NOCOLOR}"
-echo "${GREEN}You can directly download it with 'curl -L $BOOTSTRAP_SOURCE -o bootstrap.sh' ${NOCOLOR}"
-echo "${GREEN}You can update the script by running "sh bootstrap.sh -u"' ${NOCOLOR}"
+echo "${GREEN}You can directly download it with 'curl -L $BOOTSTRAP_SOURCE -o ${BOOTSTRAP_FILE}' ${NOCOLOR}"
+echo "${GREEN}You can update the script by running "sh ${BOOTSTRAP_FILE} -u"' ${NOCOLOR}"
 
 
 if [[ $1 == "-u" ]] ; then
-    echo ""
-    echo  "${GREEN} Updating bootstrap.sh ${NOCOLOR}";
-    curl -L $BOOTSTRAP_SOURCE?$(date +%s) -o $0
-    exit 1
+  echo ""
+  echo  "${GREEN} Updating ${BOOTSTRAP_FILE} ${NOCOLOR}";
+  curl -L $BOOTSTRAP_SOURCE?$(date +%s) -o $0
+  exit 1
 fi
 
 # Guard to update brew only once and only if necessary
@@ -46,6 +47,15 @@ installDependencyWithBrew(){
   brew outdated $1 || brew upgrade $1 || echo "${RED} FAILED TO UPGRADE $1 ${NOCOLOR}";
 }
 
+installYarn(){
+  echo ""
+  echo "${GREEN} INSTALLING YARN ${NOCOLOR}"
+  echo 'If you have trouble with yarn, add this to your ~/.bashrc | ~/.zshrc'
+  echo 'export PATH="$HOME/.yarn/bin:$PATH"'
+
+  (curl -o- -L https://yarnpkg.com/install.sh | bash ) || echo "${RED} FAILED TO INSTALL YARN ${NOCOLOR}"
+}
+
 if [ -e ".ruby-version" ]; then
   echo ""
   echo  "${GREEN} SETTING UP RUBY ${NOCOLOR}";
@@ -63,6 +73,14 @@ if [ -e "Gemfile" ]; then
   # install bundler gem for ruby dependency management
   gem install bundler || echo "${RED} FAILED TO INSTALL BUNDLER ${NOCOLOR}";
   bundle install || echo "${RED} FAILED TO INSTALL BUNDLE ${NOCOLOR}";
+fi
+
+if [ -e "package.json" ]; then
+  echo ""
+  echo  "${GREEN} INSTALLING node-modules ${NOCOLOR}";
+
+  which yarn || installYarn
+  yarn install || echo "${RED} FAILED TO INSTALL NODE-MODULES ${NOCOLOR}";
 fi
 
 if [ -e "podfile" ]; then
