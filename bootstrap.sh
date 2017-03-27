@@ -3,22 +3,23 @@
 # exit script, if error
 set -e
 
-# defne colors
+# define colors
 RED=`tput setaf 1`
 GREEN=`tput setaf 2`
 NOCOLOR=`tput sgr0`
 
-BOOTSTRAP_SOURCE="https://raw.githubusercontent.com/num42/n42-bootstrap-shell/master/bootstrap.sh"
+BOOTSTRAP_FILE="bootstrap.sh"
+BOOTSTRAP_SOURCE="https://raw.githubusercontent.com/num42/n42-ios-bootstrap-shell/master/${BOOTSTRAP_FILE}"
 
-echo "${GREEN}Running N42 Bootstrap v1.17 (2017-03-21)${NOCOLOR}"
+echo "${GREEN}Running N42 Bootstrap v1.18 (2017-03-27)${NOCOLOR}"
 echo "${GREEN}If the script fails, there might be a newer Version on $BOOTSTRAP_SOURCE ${NOCOLOR}"
-echo "${GREEN}You can directly download it with 'curl -L $BOOTSTRAP_SOURCE -o bootstrap.sh' ${NOCOLOR}"
-echo "${GREEN}You can update the script by running "sh bootstrap.sh -u"' ${NOCOLOR}"
+echo "${GREEN}You can directly download it with 'curl -L $BOOTSTRAP_SOURCE -o ${BOOTSTRAP_FILE}' ${NOCOLOR}"
+echo "${GREEN}You can update the script by running "sh ${BOOTSTRAP_FILE} -u"' ${NOCOLOR}"
 
 
 if [[ $1 == "-u" ]] ; then
     echo ""
-    echo  "${GREEN} Updating bootstrap.sh ${NOCOLOR}";
+    echo  "${GREEN} Updating ${BOOTSTRAP_FILE} ${NOCOLOR}";
     curl -L $BOOTSTRAP_SOURCE?$(date +%s) -o $0
     exit 1
 fi
