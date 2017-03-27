@@ -11,17 +11,17 @@ NOCOLOR=`tput sgr0`
 BOOTSTRAP_FILE="bootstrap.sh"
 BOOTSTRAP_SOURCE="https://raw.githubusercontent.com/num42/n42-ios-bootstrap-shell/master/${BOOTSTRAP_FILE}"
 
-echo "${GREEN}Running N42 Bootstrap v1.18 (2017-03-27)${NOCOLOR}"
+echo "${GREEN}Running N42 Bootstrap v1.15 (2017-03-27)${NOCOLOR}"
 echo "${GREEN}If the script fails, there might be a newer Version on $BOOTSTRAP_SOURCE ${NOCOLOR}"
 echo "${GREEN}You can directly download it with 'curl -L $BOOTSTRAP_SOURCE -o ${BOOTSTRAP_FILE}' ${NOCOLOR}"
 echo "${GREEN}You can update the script by running "sh ${BOOTSTRAP_FILE} -u"' ${NOCOLOR}"
 
 
 if [[ $1 == "-u" ]] ; then
-    echo ""
-    echo  "${GREEN} Updating ${BOOTSTRAP_FILE} ${NOCOLOR}";
-    curl -L $BOOTSTRAP_SOURCE?$(date +%s) -o $0
-    exit 1
+  echo ""
+  echo  "${GREEN} Updating ${BOOTSTRAP_FILE} ${NOCOLOR}";
+  curl -L $BOOTSTRAP_SOURCE?$(date +%s) -o $0
+  exit 1
 fi
 
 # Guard to update brew only once and only if necessary
