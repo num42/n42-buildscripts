@@ -125,8 +125,9 @@ if [ -e "bootstrap-specialized.sh" ]; then
 fi
 
 
-for file in $(find ./*/ -name "bootstrap.sh" -maxdepth 1); do
+for file in $(find ./*/ -name "${BOOTSTRAP_FILE}" -maxdepth 1); do
+  CURRENT_PWD=$(pwd)
   cd $(dirname $file)
-  source "bootstrap.sh"
-  cd ..
+  source "${BOOTSTRAP_FILE}"
+  cd "${CURRENT_PWD}"
 done
