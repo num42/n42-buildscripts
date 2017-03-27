@@ -123,11 +123,3 @@ if [ -e "bootstrap-specialized.sh" ]; then
 
   source bootstrap-specialized.sh
 fi
-
-
-for file in $(find ./*/ -name "${BOOTSTRAP_FILE}" -maxdepth 1); do
-  CURRENT_PWD=$(pwd)
-  cd $(dirname $file)
-  source "${BOOTSTRAP_FILE}"
-  cd "${CURRENT_PWD}"
-done
