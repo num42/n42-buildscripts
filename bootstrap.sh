@@ -3,7 +3,7 @@
 # exit script, if error
 set -e
 
-# defne colors
+# define colors
 RED=`tput setaf 1`
 GREEN=`tput setaf 2`
 NOCOLOR=`tput sgr0`
