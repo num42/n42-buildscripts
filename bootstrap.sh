@@ -10,7 +10,7 @@ NOCOLOR=`tput sgr0`
 
 BOOTSTRAP_SOURCE="https://raw.githubusercontent.com/num42/n42-ios-bootstrap-shell/master/bootstrap.sh"
 
-echo "${GREEN}Running N42 Bootstrap v1.14 (2017-02-20)${NOCOLOR}"
+echo "${GREEN}Running N42 Bootstrap v1.17 (2017-03-21)${NOCOLOR}"
 echo "${GREEN}If the script fails, there might be a newer Version on $BOOTSTRAP_SOURCE ${NOCOLOR}"
 echo "${GREEN}You can directly download it with 'curl -L $BOOTSTRAP_SOURCE -o bootstrap.sh' ${NOCOLOR}"
 echo "${GREEN}You can update the script by running "sh bootstrap.sh -u"' ${NOCOLOR}"
@@ -105,3 +105,10 @@ if [ -e "bootstrap-specialized.sh" ]; then
 
   source bootstrap-specialized.sh
 fi
+
+
+for file in $(find ./*/ -name "bootstrap.sh" -maxdepth 1); do
+  cd $(dirname $file)
+  source "bootstrap.sh"
+  cd ..
+done
