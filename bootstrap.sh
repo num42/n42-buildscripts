@@ -11,7 +11,7 @@ NOCOLOR=`tput sgr0`
 BOOTSTRAP_FILE="bootstrap.sh"
 BOOTSTRAP_SOURCE="https://raw.githubusercontent.com/num42/n42-ios-bootstrap-shell/master/${BOOTSTRAP_FILE}"
 
-echo "${GREEN}Running N42 Bootstrap v1.14 (2017-02-20)${NOCOLOR}"
+echo "${GREEN}Running N42 Bootstrap v1.18 (2017-03-27)${NOCOLOR}"
 echo "${GREEN}If the script fails, there might be a newer Version on $BOOTSTRAP_SOURCE ${NOCOLOR}"
 echo "${GREEN}You can directly download it with 'curl -L $BOOTSTRAP_SOURCE -o ${BOOTSTRAP_FILE}' ${NOCOLOR}"
 echo "${GREEN}You can update the script by running "sh ${BOOTSTRAP_FILE} -u"' ${NOCOLOR}"
