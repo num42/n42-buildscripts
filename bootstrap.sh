@@ -110,4 +110,5 @@ fi
 for file in $(find ./*/ -name "bootstrap.sh" -maxdepth 1); do
   cd $(dirname $file)
   source "bootstrap.sh"
+  cd ..
 done
