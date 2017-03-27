@@ -46,6 +46,15 @@ installDependencyWithBrew(){
   brew outdated $1 || brew upgrade $1 || echo "${RED} FAILED TO UPGRADE $1 ${NOCOLOR}";
 }
 
+installYarn(){
+  echo ""
+  echo "${GREEN} INSTALLING YARN ${NOCOLOR}"
+  echo 'If you have trouble with yarn, add this to your ~/.bashrc | ~/.zshrc'
+  echo 'export PATH="$HOME/.yarn/bin:$PATH"'
+
+  (curl -o- -L https://yarnpkg.com/install.sh | bash ) || echo "${RED} FAILED TO INSTALL YARN ${NOCOLOR}"
+}
+
 if [ -e ".ruby-version" ]; then
   echo ""
   echo  "${GREEN} SETTING UP RUBY ${NOCOLOR}";
@@ -69,8 +78,7 @@ if [ -e "package.json" ]; then
   echo ""
   echo  "${GREEN} INSTALLING node-modules ${NOCOLOR}";
 
-  # install bundler gem for ruby dependency management
-  installDependencyWithBrew yarn || echo "${RED} FAILED TO INSTALL YARN ${NOCOLOR}";
+  which yarn || installYarn
   yarn install || echo "${RED} FAILED TO INSTALL NODE-MODULES ${NOCOLOR}";
 fi
 
