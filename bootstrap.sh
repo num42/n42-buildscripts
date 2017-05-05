@@ -8,19 +8,19 @@ RED=`tput setaf 1`
 GREEN=`tput setaf 2`
 NOCOLOR=`tput sgr0`
 
-BOOTSTRAP_FILE="bootstrap.sh"
-BOOTSTRAP_SOURCE="https://raw.githubusercontent.com/num42/n42-ios-bootstrap-shell/master/${BOOTSTRAP_FILE}"
+SCRIPT_FILE="bootstrap.sh"
+SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/${SCRIPT_FILE}"
 
 echo "${GREEN}Running N42 Bootstrap v1.15 (2017-03-27)${NOCOLOR}"
-echo "${GREEN}If the script fails, there might be a newer Version on $BOOTSTRAP_SOURCE ${NOCOLOR}"
-echo "${GREEN}You can directly download it with 'curl -L $BOOTSTRAP_SOURCE -o ${BOOTSTRAP_FILE}' ${NOCOLOR}"
-echo "${GREEN}You can update the script by running "sh ${BOOTSTRAP_FILE} -u"' ${NOCOLOR}"
+echo "${GREEN}If the script fails, there might be a newer Version on $SCRIPT_SOURCE ${NOCOLOR}"
+echo "${GREEN}You can directly download it with 'curl -L $SCRIPT_SOURCE -o ${SCRIPT_FILE}' ${NOCOLOR}"
+echo "${GREEN}You can update the script by running "sh ${SCRIPT_FILE} -u"' ${NOCOLOR}"
 
 
 if [[ $1 == "-u" ]] ; then
   echo ""
-  echo  "${GREEN} Updating ${BOOTSTRAP_FILE} ${NOCOLOR}";
-  curl -L $BOOTSTRAP_SOURCE?$(date +%s) -o $0
+  echo  "${GREEN} Updating ${SCRIPT_FILE} ${NOCOLOR}";
+  curl -L $SCRIPT_SOURCE?$(date +%s) -o $0
   exit 1
 fi
 
@@ -117,7 +117,8 @@ if [ -e "fastlane/Fastfile" ]; then
   fi
 fi
 
-if [ -e "bootstrap-specialized.sh" ]; then
+if [ -e "
+rap-specialized.sh" ]; then
   echo ""
   echo  "${GREEN} RUNNING SPECIALIZED BOOTSTRAP SCRIPT  ${NOCOLOR}";
 
