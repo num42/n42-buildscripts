@@ -117,8 +117,7 @@ if [ -e "fastlane/Fastfile" ]; then
   fi
 fi
 
-if [ -e "
-rap-specialized.sh" ]; then
+if [ -e "bootstrap-specialized.sh" ]; then
   echo ""
   echo  "${GREEN} RUNNING SPECIALIZED BOOTSTRAP SCRIPT  ${NOCOLOR}";
 
