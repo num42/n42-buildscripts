@@ -11,7 +11,7 @@ NOCOLOR=`tput sgr0`
 SCRIPT_FILE="bootstrap.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/${SCRIPT_FILE}"
 
-echo "${GREEN}Running N42 Bootstrap v1.16 (2017-05-05)${NOCOLOR}"
+echo "${GREEN}Running N42 Bootstrap v1.17 (2017-05-11)${NOCOLOR}"
 echo "${GREEN}If the script fails, there might be a newer Version on $SCRIPT_SOURCE ${NOCOLOR}"
 echo "${GREEN}You can directly download it with 'curl -L $SCRIPT_SOURCE -o ${SCRIPT_FILE}' ${NOCOLOR}"
 echo "${GREEN}You can update the script by running "sh ${SCRIPT_FILE} -u"' ${NOCOLOR}"
