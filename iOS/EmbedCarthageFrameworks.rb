@@ -3,7 +3,7 @@
 require 'optparse'
 require 'ostruct'
 
-version = "0.0.2"
+version = "0.0.3"
 
 scriptFile = "EmbedCarthageFrameworks.rb"
 scriptSource = "https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/#{scriptFile}"
@@ -37,7 +37,7 @@ end.parse!
 
 if options.update
   puts "updating"
-  exec("curl -L #{SCRIPT_SOURCE}?$(date +%s) -o #{File.basename($0)}")
+  exec("curl -L #{scriptSource}?$(date +%s) -o #{File.basename($0)}")
 end
 
 unless options.frameworkFileName
