@@ -3,9 +3,9 @@
 require 'optparse'
 require 'ostruct'
 
-version = "0.0.1"
+version = "0.0.2"
 
-scriptFile = "EmbedCarthageFrameworks"
+scriptFile = "EmbedCarthageFrameworks.rb"
 scriptSource = "https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/#{scriptFile}"
 
 options = OpenStruct.new
