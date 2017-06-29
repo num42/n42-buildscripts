@@ -3,7 +3,7 @@
 require 'optparse'
 require 'ostruct'
 
-version = "0.0.1"
+version = "0.0.2"
 
 scriptFile = "ParallelSwiftformat.rb"
 scriptSource = "https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/#{scriptFile}"
@@ -36,7 +36,7 @@ end
 
 # Here begins the actual script
 
-input_files = %x(find . | grep .swift$ | grep -v ./Carthage | grep -v ./fastlane ).split("\n").shuffle()
+input_files = %x(find . | grep .swift$ | grep -v ./Carthage | grep -v ./fastlane | grep -v ./GeneratedCode ).split("\n").shuffle()
 
 hash = {}
 threads = []
