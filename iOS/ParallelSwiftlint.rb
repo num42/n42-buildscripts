@@ -3,7 +3,7 @@
 require 'optparse'
 require 'ostruct'
 
-version = "0.0.1"
+version = "0.0.2"
 
 scriptFile = "ParallelSwiftlint.rb"
 scriptSource = "https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/#{scriptFile}"
@@ -62,7 +62,7 @@ end
       end
     
       hash["SCRIPT_INPUT_FILE_COUNT"] = slice.count.to_s
-      system(hash, "swiftlint autocorrect --quiet --use-script-input-files; swiftlint --quiet --use-script-input-files --enable-all-rules")
+      system(hash, "swiftlint --quiet --use-script-input-files --enable-all-rules")
     end
 
 end
