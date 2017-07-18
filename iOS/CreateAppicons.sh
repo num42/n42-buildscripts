@@ -3,7 +3,7 @@
 SCRIPT_FILE="CreateAppicons.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/${SCRIPT_FILE}"
 
-echo "Running AppiconScript v1.00 (2017-06-30)"
+echo "Running AppiconScript v1.01 (2017-07-18)"
 
 if [[ $1 == "-u" ]] ; then
     echo ""
@@ -15,18 +15,29 @@ fi
 
 APPICON_SET_PATH=$1
 APPICON_SOURCE_PATH=$2
+DEBUG_LAYER_SOURCE_PATH=$3
+APPICON_PATH="${APPICON_SOURCE_PATH}/Appicon.png"
+DEBUG_LAYER_PATH="${DEBUG_LAYER_SOURCE_PATH}/Debug.png"
+
+echo $APPICON_PATH
+echo $DEBUG_LAYER_PATH
 
 if echo $OTHER_SWIFT_FLAGS | grep DEBUG_MODULES; then
     if [ ! -d "${PROJECT_DIR}/build" ]; then
         mkdir ${PROJECT_DIR}/build
     fi
 
-    bg_size=`identify -format '%wx%h' "${APPICON_SOURCE_PATH}"`
-    convert -size $bg_size -composite "${APPICON_SOURCE_PATH}" "${PROJECT_DIR}/BuildPhaseAssets/Debug.png"  -geometry $bg_size+0+0 -depth 8 "${PROJECT_DIR}/build/Appicon-Debug.png"
+    IMAGE_NAME_PATH="${APPICON_SOURCE_PATH}/Generated/"
 
-    IMAGE_NAME="${PROJECT_DIR}/build/Appicon-Debug.png"
+    mkdir -p $IMAGE_NAME_PATH
+
+    IMAGE_NAME="${IMAGE_NAME_PATH}/Appicon-Debug.png"
+
+    bg_size=`identify -format '%wx%h' "${APPICON_PATH}"`
+    convert -size $bg_size -composite "${APPICON_PATH}" "${DEBUG_LAYER_PATH}" -geometry $bg_size+0+0 -depth 8 "${IMAGE_NAME}"
+
 else
-    IMAGE_NAME="${APPICON_SOURCE_PATH}"
+    IMAGE_NAME="${APPICON_PATH}"
 fi
 
 BASE=`basename "$IMAGE_NAME"`
