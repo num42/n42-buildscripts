@@ -55,6 +55,7 @@ frameworks.each_slice(5) do | slice |
         
         slice.each_with_index do | framework, index |
             hash["SCRIPT_INPUT_FILE_#{index}"] = "#{ENV["SRCROOT"]}/#{framework.strip}"
+            hash["SCRIPT_OUTPUT_FILE_#{index}"] = " #{ENV["BUILT_PRODUCTS_DIR"]}/#{ENV["FRAMEWORKS_FOLDER_PATH"]}/#{framework.strip}"
         end
         
         puts hash
