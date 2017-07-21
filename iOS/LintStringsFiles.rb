@@ -1,5 +1,5 @@
 #!/usr/bin/ruby
-#file_description: This scripts checks for missing semicolons in .strins-files.
+#file_description: This scripts checks for missing semicolons in .strings-files.
 
 require 'optparse'
 require 'ostruct'
