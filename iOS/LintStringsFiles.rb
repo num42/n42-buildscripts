@@ -10,7 +10,7 @@ end
 
 version = "0.0.2"
 
-scriptFile = "LintStringsFile.rb"
+scriptFile = "LintStringsFiles.rb"
 scriptSource = "https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/#{scriptFile}"
 
 options = OpenStruct.new
