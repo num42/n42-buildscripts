@@ -3,7 +3,7 @@
 require 'optparse'
 require 'ostruct'
 
-version = "0.0.2"
+version = "0.0.3"
 
 scriptFile = "ParallelSwiftformat.rb"
 scriptSource = "https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/#{scriptFile}"
@@ -43,7 +43,7 @@ threads = []
 
 input_files.each_slice(20) do | slice |
     threads << Thread.new do
-      system("/usr/local/bin/swiftformat --disable redundantSelf --cache ignore --indent 2 --wraparguments beforefirst --wrapelements beforefirst --header ignore --patternlet inline --stripunusedargs closure-only --insertlines disabled --commas inline #{slice.map { |file| "\"#{file}\"" }.join(" ")}")
+      system("swiftformat --disable redundantSelf --cache ignore --indent 2 --wraparguments beforefirst --wrapelements beforefirst --header ignore --patternlet inline --stripunusedargs closure-only --insertlines disabled --commas inline #{slice.map { |file| "\"#{file}\"" }.join(" ")}")
     end
 end
 
