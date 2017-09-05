@@ -12,7 +12,7 @@ if [[ $1 == "-u" ]] ; then
 fi
 
 if which $HOME/go/bin/misspell >/dev/null; then
-    $HOME/go//bin/misspell $* -o | sed 's/: \"/: warning: \"/g'
+    $HOME/go/bin/misspell $* -o | grep -v ".json" | sed 's/: \"/: warning: \"/g'
 else
     echo “Misspell not installed, skipping.”
     exit 0
