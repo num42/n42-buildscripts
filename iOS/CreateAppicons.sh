@@ -3,7 +3,7 @@
 SCRIPT_FILE="CreateAppicons.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/${SCRIPT_FILE}"
 
-echo "Running AppiconScript v1.01 (2017-07-18)"
+echo "Running AppiconScript v1.02 (9. January 2018)"
 
 if [[ $1 == "-u" ]] ; then
     echo ""
