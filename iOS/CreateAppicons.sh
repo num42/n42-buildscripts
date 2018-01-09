@@ -22,10 +22,11 @@ DEBUG_LAYER_PATH="${DEBUG_LAYER_SOURCE_PATH}/Debug.png"
 echo $APPICON_PATH
 echo $DEBUG_LAYER_PATH
 
-if echo $OTHER_SWIFT_FLAGS | grep DEBUG_MODULES; then
-    if [ ! -d "${PROJECT_DIR}/build" ]; then
-        mkdir ${PROJECT_DIR}/build
-    fi
+case "$OTHER_SWIFT_FLAGS" in
+    *DEBUG_MODULES*)
+        if [ ! -d "${PROJECT_DIR}/build" ]; then
+            mkdir ${PROJECT_DIR}/build
+        fi
 
         IMAGE_NAME_PATH="${APPICON_SOURCE_PATH}/Generated/"
 
@@ -36,9 +37,9 @@ if echo $OTHER_SWIFT_FLAGS | grep DEBUG_MODULES; then
         bg_size=`identify -format '%wx%h' "${APPICON_PATH}"`
         convert -size $bg_size -composite "${APPICON_PATH}" "${DEBUG_LAYER_PATH}" -geometry $bg_size+0+0 -depth 8 "${IMAGE_NAME}";;
 
-else
-    IMAGE_NAME="${APPICON_PATH}"
-fi
+    *)
+        IMAGE_NAME="${APPICON_PATH}";;
+esac
 
 BASE=`basename "$IMAGE_NAME"`
 
