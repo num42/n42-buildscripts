@@ -43,8 +43,9 @@ esac
 
 BASE=`basename "$IMAGE_NAME"`
 
-    convert "$IMAGE_NAME" -resize $SIZEx$SIZE "$APPICON_SET_PATH/$SIZE.png" &
 for SIZE in 20 29 40 48 50 55 57 58 60 72 76 80 87 100 114 120 144 152 167 172 180 196 1024; do
+# ensure alpha is off for itunes connect
+convert "$IMAGE_NAME" -resize $SIZEx$SIZE -alpha off "$APPICON_SET_PATH/$SIZE.png" &
 done;
 
 wait
