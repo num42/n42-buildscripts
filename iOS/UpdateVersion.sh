@@ -2,7 +2,7 @@
 SCRIPT_FILE="UpdateVersion.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/${SCRIPT_FILE}"
 
-echo "Running N42 UpdateVersion Script v1.01 (2017-08-07)"
+echo "Running N42 UpdateVersion Script v1.02 (9. January 2018)"
 
 if [[ $1 == "-u" ]] ; then
   echo ""
@@ -21,6 +21,10 @@ if [[ $(git branch | grep \* | cut -d ' ' -f2 | cut -d "/" -f1) == release ]] ;
 then
   # use the branch name
   VERSION_TAG=$(git branch | grep \* | cut -d ' ' -f2 | cut -d "/" -f2)
+elif [[ $(git show-ref | grep $(git rev-parse HEAD) | grep release | rev | cut -d "/" -f 2 | rev) == release ]] ;
+then
+  # use the branch name
+  VERSION_TAG=$(git show-ref | grep $(git rev-parse HEAD) | grep release | rev | cut -d "/" -f 1 | rev)
 else
   # use the latest tag otherwise
   VERSION_TAG=$(git describe --tags --abbrev=0)
