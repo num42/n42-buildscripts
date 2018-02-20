@@ -4,7 +4,7 @@ require 'optparse'
 require 'ostruct'
 require 'xcodeproj'
 
-version = "0.3.0"
+version = "0.3.1"
 
 scriptFile = "AutocorrectAndFormat.rb"
 scriptSource = "https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/#{scriptFile}"
@@ -72,7 +72,7 @@ numberOfGroups = 4
 
     system("swiftformat --disable redundantSelf --indent 2 --wraparguments beforefirst --wrapelements beforefirst --header ignore --patternlet inline --stripunusedargs closure-only --disable blankLinesBetweenScopes --disable blankLinesAroundMark --commas inline #{slice.join(" ")}")
 
-    system(hash, "swiftlint lint --quiet --use-script-input-files)
+    system(hash, "swiftlint lint --quiet --use-script-input-files")
   end
 end
 
