@@ -43,7 +43,7 @@ project = Xcodeproj::Project.open(ENV["PROJECT_FILE_PATH"])
 input_files = project.targets.select { |target| target.name.eql? ENV["TARGETNAME"] }.first.source_build_phase.files.to_a.map do |pbx_build_file|
 pbx_build_file.file_ref.real_path.to_s
 end.select do |path|
-path.end_with?(".m", ".mm", ".swift")
+path.end_with?(".swift")
 end.select do |path|
 not path.include?("GeneratedCode")
 end
