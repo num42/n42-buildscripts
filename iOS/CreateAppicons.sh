@@ -3,7 +3,7 @@
 SCRIPT_FILE="CreateAppicons.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/${SCRIPT_FILE}"
 
-echo "Running AppiconScript v1.2 (20. February 2018)"
+echo "Running AppiconScript v1.2.1 (20. February 2018)"
 
 if [[ $1 == "-u" ]] ; then
     echo ""
@@ -43,7 +43,7 @@ esac
 
 TMP_PATH=${PROJECT_DIR}/build
 
-OUTPUT_PATH="${PROJECT_DIR}/${TARGETNAME}/Supporting Files/Appicon.xcassets/AppIcon.appiconset"
+OUTPUT_PATH=$APPICON_SET_PATH
 BASE=`basename "$IMAGE_NAME"`
 
 move_if_different(){
