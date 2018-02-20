@@ -4,7 +4,7 @@ require 'optparse'
 require 'ostruct'
 require 'xcodeproj'
 
-version = "0.2.0"
+version = "0.3.0"
 
 scriptFile = "AutocorrectAndFormat.rb"
 scriptSource = "https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/#{scriptFile}"
@@ -45,19 +45,35 @@ input_files = project.targets.select { |target| target.name.eql? ENV["TARGETNAME
 end.select do |path|
   path.end_with?(".swift")
 end.select do |path|
-  not path.include?("GeneratedCode")
+  not path.include?("GeneratedCode") || path.include?("Carthage") || path.include?("fastlane") || path.include?("Pods")
 end
 
 hash = {}
+threads = []
 
-input_files.each_with_index do | filename, index |
-hash["SCRIPT_INPUT_FILE_#{index}"] = filename
+module Enumerable
+  def every_nth(n, offset)
+    (0... self.length).select{ |x| x%n == n-1 }.map { |y| self[y - offset] }
+  end
 end
 
-hash["SCRIPT_INPUT_FILE_COUNT"] = input_files.count.to_s
+numberOfGroups = 4
+1.upto(numberOfGroups) do | group |
+  slice = input_files.every_nth(numberOfGroups, group).map { |line| line.split(" ").last}
 
-system(hash, "swiftlint autocorrect --use-script-input-files")
+  threads << Thread.new do
+    slice.each_with_index do | filename, index |
+      hash["SCRIPT_INPUT_FILE_#{index}"] = filename
+    end
 
-system("swiftformat --disable redundantSelf --cache ignore --indent 2 --wraparguments beforefirst --wrapelements beforefirst --header ignore --patternlet inline --stripunusedargs closure-only --disable blankLinesBetweenScopes --disable blankLinesAroundMark --commas inline #{input_files.join(" ")}")
+    hash["SCRIPT_INPUT_FILE_COUNT"] = slice.count.to_s
 
-system(hash, "swiftlint lint --quiet --use-script-input-files")
+    system(hash, "swiftlint autocorrect --use-script-input-files")
+
+    system("swiftformat --disable redundantSelf --indent 2 --wraparguments beforefirst --wrapelements beforefirst --header ignore --patternlet inline --stripunusedargs closure-only --disable blankLinesBetweenScopes --disable blankLinesAroundMark --commas inline #{slice.join(" ")}")
+
+    system(hash, "swiftlint lint --quiet --use-script-input-files)
+  end
+end
+
+threads.each { |thr| thr.join }
