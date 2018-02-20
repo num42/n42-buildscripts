@@ -56,8 +56,8 @@ end
 
 hash["SCRIPT_INPUT_FILE_COUNT"] = input_files.count.to_s
 
-system(hash, "mint run realm/SwiftLint@$(cat .brew-versions | grep swiftlint | cut -d \":\" -f 2) \"swiftlint autocorrect \-\-use-script-input-files\"")
+system(hash, "swiftlint autocorrect --use-script-input-files")
 
 system("swiftformat --disable redundantSelf --cache ignore --indent 2 --wraparguments beforefirst --wrapelements beforefirst --header ignore --patternlet inline --stripunusedargs closure-only --insertlines disabled --commas inline #{input_files.join(" ")}")
 
-system(hash, "mint run realm/SwiftLint@$(cat .brew-versions | grep swiftlint | cut -d \":\" -f 2) \"swiftlint lint \-\-quiet \-\-use-script-input-files\"")
+system(hash, "swiftlint lint --quiet --use-script-input-files")
