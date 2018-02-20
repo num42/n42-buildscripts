@@ -3,7 +3,7 @@
 SCRIPT_FILE="CreateAppicons.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/${SCRIPT_FILE}"
 
-echo "Running AppiconScript v1.1 (20. February 2018)"
+echo "Running AppiconScript v1.2 (20. February 2018)"
 
 if [[ $1 == "-u" ]] ; then
     echo ""
@@ -19,14 +19,14 @@ DEBUG_LAYER_SOURCE_PATH=$3
 APPICON_PATH="${APPICON_SOURCE_PATH}/Appicon.png"
 DEBUG_LAYER_PATH="${DEBUG_LAYER_SOURCE_PATH}/Debug.png"
 
-echo $APPICON_PATH
-echo $DEBUG_LAYER_PATH
+BASE=`basename "$IMAGE_NAME"`
 
-case "$OTHER_SWIFT_FLAGS" in
+if [ ! -d "${PROJECT_DIR}/build" ]; then
+  mkdir ${PROJECT_DIR}/build
+fi
+
+case "$SWIFT_ACTIVE_COMPILATION_CONDITIONS" in
     *DEBUG_MODULES*)
-        if [ ! -d "${PROJECT_DIR}/build" ]; then
-            mkdir ${PROJECT_DIR}/build
-        fi
 
         IMAGE_NAME_PATH="${APPICON_SOURCE_PATH}/Generated/"
 
@@ -41,35 +41,66 @@ case "$OTHER_SWIFT_FLAGS" in
         IMAGE_NAME="${APPICON_PATH}";;
 esac
 
-BASE=`basename "$IMAGE_NAME"`
-
-if [ ! -d "${PROJECT_DIR}/build" ]; then
-  mkdir ${PROJECT_DIR}/build
-fi
-
 TMP_PATH=${PROJECT_DIR}/build
 
+OUTPUT_PATH="${PROJECT_DIR}/${TARGETNAME}/Supporting Files/Appicon.xcassets/AppIcon.appiconset"
+BASE=`basename "$IMAGE_NAME"`
+
 move_if_different(){
+
   if [ -e "$2" ]
   then
-    #Compare the files at the paths given
-    compare -identify -metric MAE "$1" "$2" "$TMP_PATH/null"
-
-    RETVAL=$?
-
-    # If files are equal, delete first file
-    [ $RETVAL -eq 0 ] && rm "$1"
-
-    # If files are different, update second file
-    [ $RETVAL -ne 0 ] && echo "Copying" && mv "$1" "$2"
+    #Compare the files at the paths given, count different bytes
+    if [ $(cmp -l "$1" "$2" | wc -l) -lt 30 ]
+    then
+      # If files are equal, delete first file
+      echo "not copying $1 as no changes are detected"
+      rm "$1" &
+    else
+      # If files are different, update second file
+      echo "copying $1 to $2"
+      mv "$1" "$2"
+    fi
   else
+    # second file does not yet exist
     mv "$1" "$2"
   fi
 }
 
-for SIZE in 20 29 40 48 50 55 57 58 60 72 76 80 87 100 114 120 144 152 167 172 180 196 1024; do
-  # ensure alpha is off for itunes connect
-  convert "$IMAGE_NAME" -resize $SIZEx$SIZE -alpha off "$TMP_PATH/tmp_$SIZE.png"; move_if_different "$TMP_PATH/tmp_$SIZE.png" "$APPICON_SET_PATH/$SIZE.png" &
+convert "$IMAGE_NAME" -alpha off -write mpr:main +delete \
+  mpr:main -resize "1024x1024" -write "$TMP_PATH/tmp_1024.png" +delete \
+  mpr:main -resize "196x196" -write "$TMP_PATH/tmp_196.png" +delete \
+  mpr:main -resize "180x180" -write "$TMP_PATH/tmp_180.png" +delete \
+  mpr:main -resize "172x172" -write "$TMP_PATH/tmp_172.png" +delete \
+  mpr:main -resize "167x167" -write "$TMP_PATH/tmp_167.png" +delete \
+  mpr:main -resize "152x152" -write "$TMP_PATH/tmp_152.png" +delete \
+  mpr:main -resize "144x144" -write "$TMP_PATH/tmp_144.png" +delete \
+  mpr:main -resize "120x120" -write "$TMP_PATH/tmp_120.png" +delete \
+  mpr:main -resize "114x114" -write "$TMP_PATH/tmp_114.png" +delete \
+  mpr:main -resize "100x100" -write "$TMP_PATH/tmp_100.png" +delete \
+  mpr:main -resize "87x87" "$TMP_PATH/tmp_87.png" &
+
+# partly parrallelize for speed
+convert "$IMAGE_NAME" -alpha off -write mpr:main +delete \
+  mpr:main -resize "80x80" -write "$TMP_PATH/tmp_80.png" +delete \
+  mpr:main -resize "76x76" -write "$TMP_PATH/tmp_76.png" +delete \
+  mpr:main -resize "72x72" -write "$TMP_PATH/tmp_72.png" +delete \
+  mpr:main -resize "60x60" -write "$TMP_PATH/tmp_60.png" +delete \
+  mpr:main -resize "58x58" -write "$TMP_PATH/tmp_58.png" +delete \
+  mpr:main -resize "57x57" -write "$TMP_PATH/tmp_57.png" +delete \
+  mpr:main -resize "55x55" -write "$TMP_PATH/tmp_55.png" +delete \
+  mpr:main -resize "50x50" -write "$TMP_PATH/tmp_50.png" +delete \
+  mpr:main -resize "48x48" -write "$TMP_PATH/tmp_48.png" +delete \
+  mpr:main -resize "40x40" -write "$TMP_PATH/tmp_40.png" +delete \
+  mpr:main -resize "29x29" -write "$TMP_PATH/tmp_29.png" +delete \
+  mpr:main -resize "20x20" "$TMP_PATH/tmp_20.png" &
+
+
+wait
+
+# only copy if different, to avoid asset recompile
+for SIZE in 1024 196 180 172 167 152 144 120 114 100 87 80 76 72 60 58 57 55 50 48 40 29 20; do
+  move_if_different "$TMP_PATH/tmp_$SIZE.png" "$OUTPUT_PATH/$SIZE.png" &
 done;
 
 wait
