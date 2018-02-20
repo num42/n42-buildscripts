@@ -3,8 +3,9 @@
 require 'optparse'
 require 'ostruct'
 require 'xcodeproj'
+require 'shellwords'
 
-version = "0.3.1"
+version = "0.3.3"
 
 scriptFile = "AutocorrectAndFormat.rb"
 scriptSource = "https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/#{scriptFile}"
@@ -59,18 +60,20 @@ end
 
 numberOfGroups = 4
 1.upto(numberOfGroups) do | group |
-  slice = input_files.every_nth(numberOfGroups, group).map { |line| line.split(" ").last}
+  slice = input_files.every_nth(numberOfGroups, group)
 
   threads << Thread.new do
     slice.each_with_index do | filename, index |
-      hash["SCRIPT_INPUT_FILE_#{index}"] = filename
+      hash["SCRIPT_INPUT_FILE_#{index}"] = filename.gsub("\+", "+")
     end
 
     hash["SCRIPT_INPUT_FILE_COUNT"] = slice.count.to_s
 
     system(hash, "swiftlint autocorrect --use-script-input-files")
 
-    system("swiftformat --disable redundantSelf --indent 2 --wraparguments beforefirst --wrapelements beforefirst --header ignore --patternlet inline --stripunusedargs closure-only --disable blankLinesBetweenScopes --disable blankLinesAroundMark --commas inline #{slice.join(" ")}")
+    filesList = slice.map{ |file| file.gsub("\+", "+") }.join(" ")
+
+    system("swiftformat --disable redundantSelf --indent 2 --wraparguments beforefirst --wrapelements beforefirst --header ignore --patternlet inline --stripunusedargs closure-only --disable blankLinesBetweenScopes --disable blankLinesAroundMark --commas inline #{filesList}")
 
     system(hash, "swiftlint lint --quiet --use-script-input-files")
   end
