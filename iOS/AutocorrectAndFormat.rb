@@ -4,7 +4,7 @@ require 'optparse'
 require 'ostruct'
 require 'xcodeproj'
 
-version = "0.0.1"
+version = "0.2.0"
 
 scriptFile = "AutocorrectAndFormat.rb"
 scriptSource = "https://raw.githubusercontent.com/num42/n42-buildscripts/master/iOS/#{scriptFile}"
