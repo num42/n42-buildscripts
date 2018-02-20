@@ -58,6 +58,6 @@ hash["SCRIPT_INPUT_FILE_COUNT"] = input_files.count.to_s
 
 system(hash, "swiftlint autocorrect --use-script-input-files")
 
-system("swiftformat --disable redundantSelf --cache ignore --indent 2 --wraparguments beforefirst --wrapelements beforefirst --header ignore --patternlet inline --stripunusedargs closure-only --insertlines disabled --commas inline #{input_files.join(" ")}")
+system("swiftformat --disable redundantSelf --cache ignore --indent 2 --wraparguments beforefirst --wrapelements beforefirst --header ignore --patternlet inline --stripunusedargs closure-only --disable blankLinesBetweenScopes --disable blankLinesAroundMark --commas inline #{input_files.join(" ")}")
 
 system(hash, "swiftlint lint --quiet --use-script-input-files")
