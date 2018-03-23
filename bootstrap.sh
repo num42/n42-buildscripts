@@ -71,7 +71,7 @@ if [ -e "Gemfile" ]; then
   echo  "${GREEN} INSTALLING GEMS ${NOCOLOR}";
 
   # install bundler gem for ruby dependency management
-  gem install bundler || echo "${RED} FAILED TO INSTALL BUNDLER ${NOCOLOR}";
+  gem install bundler --no-document || echo "${RED} FAILED TO INSTALL BUNDLER ${NOCOLOR}";
   bundle install || echo "${RED} FAILED TO INSTALL BUNDLE ${NOCOLOR}";
 fi
 
