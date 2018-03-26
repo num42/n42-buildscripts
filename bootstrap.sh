@@ -11,7 +11,7 @@ NOCOLOR=`tput sgr0`
 SCRIPT_FILE="bootstrap.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/${SCRIPT_FILE}"
 
-echo "${GREEN}Running N42 Bootstrap v1.30 (2018-03-26)${NOCOLOR}"
+echo "${GREEN}Running N42 Bootstrap v1.40 (2018-03-26)${NOCOLOR}"
 echo "${GREEN}If the script fails, there might be a newer Version on $SCRIPT_SOURCE ${NOCOLOR}"
 echo "${GREEN}You can directly download it with 'curl -L $SCRIPT_SOURCE -o ${SCRIPT_FILE}' ${NOCOLOR}"
 echo "${GREEN}You can update the script by running "sh ${SCRIPT_FILE} -u"' ${NOCOLOR}"
@@ -55,6 +55,12 @@ installYarn(){
 
   (curl -o- -L https://yarnpkg.com/install.sh | bash ) || echo "${RED} FAILED TO INSTALL YARN ${NOCOLOR}"
 }
+
+if [ \( -e ".env-sample" \) -a \( ! -e ".env" \) ]; then
+  echo ""
+  echo  "${GREEN} Copying .env-sample to .env ${NOCOLOR}";
+  cp .env-sample .env
+fi
 
 if [ -e ".ruby-version" ]; then
   echo ""
