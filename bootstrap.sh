@@ -89,6 +89,14 @@ if [ -e "package.json" ]; then
   yarn install || echo "${RED} FAILED TO INSTALL NODE-MODULES ${NOCOLOR}";
 fi
 
+if [ -e "mix.exs" ]; then
+  echo ""
+  echo  "${GREEN} INSTALLING elixir(MIX) dependencies ${NOCOLOR}";
+
+  which mix || brew install elixir
+  mix deps.get || echo "${RED} FAILED TO INSTALL ELIXIR(MIX) DEPENDENCIES ${NOCOLOR}";
+fi
+
 if [ -e "podfile" ]; then
   echo ""
   echo  "${GREEN} RUNNING COCOAPODS ${NOCOLOR}";
