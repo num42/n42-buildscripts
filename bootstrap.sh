@@ -81,12 +81,13 @@ if [ -e "Gemfile" ]; then
   bundle install || echo "${RED} FAILED TO INSTALL BUNDLE ${NOCOLOR}";
 fi
 
-if [ -e ".n-node-version" ]; then
+
+if [ -e ".node-version" ]; then
   echo ""
   echo  "${GREEN} SETTING UP NODE ${NOCOLOR}";
 
   installDependencyWithBrew n
-  # install node version from .n-node-version
+  # install node version from .node-version
   n auto
 fi
 
