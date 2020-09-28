@@ -81,6 +81,7 @@ if [ -e "Gemfile" ]; then
   bundle install || echo "${RED} FAILED TO INSTALL BUNDLE ${NOCOLOR}";
 fi
 
+
 if [ -e ".node-version" ]; then
   echo ""
   echo  "${GREEN} SETTING UP NODE ${NOCOLOR}";
