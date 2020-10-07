@@ -107,22 +107,6 @@ if [ -e "mix.exs" ]; then
   mix deps.get || echo "${RED} FAILED TO INSTALL ELIXIR(MIX) DEPENDENCIES ${NOCOLOR}";
 fi
 
-if [ -e "podfile" ]; then
-  echo ""
-  echo  "${GREEN} RUNNING COCOAPODS ${NOCOLOR}";
-
-  # install cocoapods dependencies
-  bundle exec pod repo update
-  bundle exec pod install || echo "${RED} FAILED TO INSTALL PODS ${NOCOLOR}";
-fi
-
-if [ -e "Cartfile" ]; then
-  echo ""
-  echo  "${GREEN} INSTALLING CARTHAGE ${NOCOLOR}";
-
-  installDependencyWithBrew carthage
-fi
-
 if [ -e ".gitmodules" ]; then
   echo ""
   echo  "${GREEN} SETTING UP GITMODULES ${NOCOLOR}";
