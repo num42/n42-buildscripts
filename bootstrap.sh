@@ -42,6 +42,8 @@ fi
 if [ -e "Brewfile" ]; then
   echo ""
   echo  "${GREEN} INSTALLING BREW DEPENDENCIES ${NOCOLOR}";
+  echo  "${GREEN} HINT: If any tools (e.g. n, rbenv, protobuf) are not found during bootstrap, adding them to the Brewfile might solve the issue.${NOCOLOR}";
+  echo  "${GREEN} For an example Brewfile, see https://github.com/Homebrew/homebrew-bundle${NOCOLOR}";
 
   brew update
   brew bundle
