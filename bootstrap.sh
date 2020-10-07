@@ -67,7 +67,7 @@ if [ -e ".ruby-version" ]; then
   echo  "${GREEN} SETTING UP RUBY ${NOCOLOR}";
 
   installDependencyWithBrew rbenv
-  installDependencyWithBrew ruby-build
+
   # install ruby version from .ruby-version, skipping if already installed (-s)
   rbenv install -s
 fi
