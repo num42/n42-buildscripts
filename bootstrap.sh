@@ -24,29 +24,6 @@ if [[ $1 == "-u" ]] ; then
   exit 1
 fi
 
-# Guard to update brew only once and only if necessary
-NEEDS_TO_UPDATE_BREW=1
-
-installDependencyWithBrew(){
-  if [ $NEEDS_TO_UPDATE_BREW -eq 1 ]; then
-    echo ""
-    echo  "${GREEN} UPDATING BREW ${NOCOLOR}";
-
-    # update brew to keep dependencies up to date
-    brew update || echo "${RED} FAILED TO UPDATE BREW ${NOCOLOR}";
-    NEEDS_TO_UPDATE_BREW=0
-  fi
-
-  echo ""
-  echo  "${GREEN} INSTALLING $1 WITH BREW ${NOCOLOR}";
-
-  # install dependency, if is not installed
-  brew list $1 || brew install $1 || echo "${RED} FAILED TO INSTALL $1 ${NOCOLOR}";
-
-  # upgrade dependency, if it is outdated
-  brew outdated $1 || brew upgrade $1 || echo "${RED} FAILED TO UPGRADE $1 ${NOCOLOR}";
-}
-
 installYarn(){
   echo ""
   echo "${GREEN} INSTALLING YARN ${NOCOLOR}"
@@ -62,12 +39,18 @@ if [ \( -e ".env-sample" \) -a \( ! -e ".env" \) ]; then
   cp .env-sample .env
 fi
 
+if [ -e "Brewfile" ]; then
+  echo ""
+  echo  "${GREEN} INSTALLING BREW DEPENDENCIES ${NOCOLOR}";
+
+  brew update
+  brew bundle
+fi
+
 if [ -e ".ruby-version" ]; then
   echo ""
   echo  "${GREEN} SETTING UP RUBY ${NOCOLOR}";
 
-  installDependencyWithBrew rbenv
-  installDependencyWithBrew ruby-build
   # install ruby version from .ruby-version, skipping if already installed (-s)
   rbenv install -s
 fi
@@ -86,7 +69,6 @@ if [ -e ".node-version" ]; then
   echo ""
   echo  "${GREEN} SETTING UP NODE ${NOCOLOR}";
 
-  installDependencyWithBrew n
   # install node version from .node-version
   n auto
 fi
@@ -103,7 +85,6 @@ if [ -e "mix.exs" ]; then
   echo ""
   echo  "${GREEN} INSTALLING elixir(MIX) dependencies ${NOCOLOR}";
 
-  which mix || brew install elixir
   mix deps.get || echo "${RED} FAILED TO INSTALL ELIXIR(MIX) DEPENDENCIES ${NOCOLOR}";
 fi
 
@@ -114,13 +95,6 @@ if [ -e "podfile" ]; then
   # install cocoapods dependencies
   bundle exec pod repo update
   bundle exec pod install || echo "${RED} FAILED TO INSTALL PODS ${NOCOLOR}";
-fi
-
-if [ -e "Cartfile" ]; then
-  echo ""
-  echo  "${GREEN} INSTALLING CARTHAGE ${NOCOLOR}";
-
-  installDependencyWithBrew carthage
 fi
 
 if [ -e ".gitmodules" ]; then
