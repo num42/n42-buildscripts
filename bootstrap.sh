@@ -35,7 +35,7 @@ installYarn(){
 
 if [ \( -e ".env-sample" \) -a \( ! -e ".env" \) ]; then
   echo ""
-  echo  "${GREEN} Copying .env-sample to .env ${NOCOLOR}";
+  echo  "${GREEN} COPYING .env-sample TO .env ${NOCOLOR}";
   cp .env-sample .env
 fi
 
@@ -77,7 +77,7 @@ fi
 
 if [ -e "package.json" ]; then
   echo ""
-  echo  "${GREEN} INSTALLING node-modules ${NOCOLOR}";
+  echo  "${GREEN} INSTALLING NODE-MODULES ${NOCOLOR}";
 
   which yarn || installYarn
   yarn install || echo "${RED} FAILED TO INSTALL NODE-MODULES ${NOCOLOR}";
@@ -85,7 +85,7 @@ fi
 
 if [ -e "mix.exs" ]; then
   echo ""
-  echo  "${GREEN} INSTALLING elixir(MIX) dependencies ${NOCOLOR}";
+  echo  "${GREEN} INSTALLING elixir(MIX) DEPENDENCIES ${NOCOLOR}";
 
   mix deps.get || echo "${RED} FAILED TO INSTALL ELIXIR(MIX) DEPENDENCIES ${NOCOLOR}";
 fi
