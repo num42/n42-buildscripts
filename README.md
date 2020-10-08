@@ -3,4 +3,4 @@ All Scripts support autoupdating using the -u flag.
 
 # General
 
-- Bootstrap.sh - Install rbenv, gems, pods etc.
+- Bootstrap.sh - Install brew dependencies, gems, node version, node modules etc.
