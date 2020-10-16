@@ -11,7 +11,7 @@ NOCOLOR=`tput sgr0`
 SCRIPT_FILE="bootstrap.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/${SCRIPT_FILE}"
 
-echo "${GREEN}Running N42 Bootstrap v1.40 (2018-03-26)${NOCOLOR}"
+echo "${GREEN}Running N42 Bootstrap v1.41 (2020-10-13)${NOCOLOR}"
 echo "${GREEN}If the script fails, there might be a newer Version on $SCRIPT_SOURCE ${NOCOLOR}"
 echo "${GREEN}You can directly download it with 'curl -L $SCRIPT_SOURCE -o ${SCRIPT_FILE}' ${NOCOLOR}"
 echo "${GREEN}You can update the script by running "sh ${SCRIPT_FILE} -u"' ${NOCOLOR}"
@@ -75,12 +75,20 @@ if [ -e ".node-version" ]; then
   n auto
 fi
 
-if [ -e "package.json" ]; then
+if [ -e "package-lock.json" ]; then
   echo ""
-  echo  "${GREEN} INSTALLING node-modules ${NOCOLOR}";
+  echo  "${GREEN} INSTALLING node-modules (NPM) ${NOCOLOR}";
 
-  which yarn || installYarn
-  yarn install || echo "${RED} FAILED TO INSTALL NODE-MODULES ${NOCOLOR}";
+  # we expect npm to be installed via node.
+  npm install || echo "${RED} FAILED TO INSTALL NODE-MODULES (NPM) ${NOCOLOR}";
+fi
+
+if [ -e "yarn.lock" ]; then
+  echo ""
+  echo  "${GREEN} INSTALLING node-modules (YARN) ${NOCOLOR}";
+
+  # we expect yarn to be installed via brew(file)
+  yarn install || echo "${RED} FAILED TO INSTALL NODE-MODULES (YARN) ${NOCOLOR}";
 fi
 
 if [ -e "mix.exs" ]; then
