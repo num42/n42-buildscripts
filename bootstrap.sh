@@ -11,7 +11,7 @@ NOCOLOR=`tput sgr0`
 SCRIPT_FILE="bootstrap.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/${SCRIPT_FILE}"
 
-echo "${GREEN}Running N42 Bootstrap v1.41 (2020-10-13)${NOCOLOR}"
+echo "${GREEN}Running N42 Bootstrap v2.01 (2020-10-19)${NOCOLOR}"
 echo "${GREEN}If the script fails, there might be a newer Version on $SCRIPT_SOURCE ${NOCOLOR}"
 echo "${GREEN}You can directly download it with 'curl -L $SCRIPT_SOURCE -o ${SCRIPT_FILE}' ${NOCOLOR}"
 echo "${GREEN}You can update the script by running "sh ${SCRIPT_FILE} -u"' ${NOCOLOR}"
@@ -35,7 +35,7 @@ installYarn(){
 
 if [ \( -e ".env-sample" \) -a \( ! -e ".env" \) ]; then
   echo ""
-  echo  "${GREEN} Copying .env-sample to .env ${NOCOLOR}";
+  echo  "${GREEN} COPYING .env-sample TO .env ${NOCOLOR}";
   cp .env-sample .env
 fi
 
@@ -93,7 +93,7 @@ fi
 
 if [ -e "mix.exs" ]; then
   echo ""
-  echo  "${GREEN} INSTALLING elixir(MIX) dependencies ${NOCOLOR}";
+  echo  "${GREEN} INSTALLING elixir(MIX) DEPENDENCIES ${NOCOLOR}";
 
   mix deps.get || echo "${RED} FAILED TO INSTALL ELIXIR(MIX) DEPENDENCIES ${NOCOLOR}";
 fi
