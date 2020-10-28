@@ -11,7 +11,7 @@ NOCOLOR=`tput sgr0`
 SCRIPT_FILE="bootstrap.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/${SCRIPT_FILE}"
 
-echo "${GREEN}Running N42 Bootstrap v2.01 (2020-10-19)${NOCOLOR}"
+echo "${GREEN}Running N42 Bootstrap v2.02 (2020-10-28)${NOCOLOR}"
 echo "${GREEN}If the script fails, there might be a newer Version on $SCRIPT_SOURCE ${NOCOLOR}"
 echo "${GREEN}You can directly download it with 'curl -L $SCRIPT_SOURCE -o ${SCRIPT_FILE}' ${NOCOLOR}"
 echo "${GREEN}You can update the script by running "sh ${SCRIPT_FILE} -u"' ${NOCOLOR}"
@@ -23,15 +23,6 @@ if [[ $1 == "-u" ]] ; then
   curl -L $SCRIPT_SOURCE?$(date +%s) -o $0
   exit 1
 fi
-
-installYarn(){
-  echo ""
-  echo "${GREEN} INSTALLING YARN ${NOCOLOR}"
-  echo 'If you have trouble with yarn, add this to your ~/.bashrc | ~/.zshrc'
-  echo 'export PATH="$HOME/.yarn/bin:$PATH"'
-
-  (curl -o- -L https://yarnpkg.com/install.sh | bash ) || echo "${RED} FAILED TO INSTALL YARN ${NOCOLOR}"
-}
 
 if [ \( -e ".env-sample" \) -a \( ! -e ".env" \) ]; then
   echo ""
