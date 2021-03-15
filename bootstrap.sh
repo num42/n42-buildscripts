@@ -102,5 +102,5 @@ if [ -e "bootstrap-specialized.sh" ]; then
   echo ""
   echo  "${GREEN} RUNNING SPECIALIZED BOOTSTRAP SCRIPT  ${NOCOLOR}";
 
-  source bootstrap-specialized.sh
+  . bootstrap-specialized.sh
 fi
