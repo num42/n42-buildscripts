@@ -24,7 +24,7 @@ if [[ $1 == "-u" ]] ; then
   exit 1
 fi
 
-if [ \( -e ".env-sample" \) -a \( ! -e ".env" \) ]; then
+if [ \( -e ".env-sample" \) ] && [ \( ! -e ".env" \) ]; then
   echo ""
   echo  "${GREEN} COPYING .env-sample TO .env ${NOCOLOR}";
   cp .env-sample .env
