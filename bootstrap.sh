@@ -4,9 +4,9 @@
 set -e
 
 # define colors
-RED=`tput setaf 1`
-GREEN=`tput setaf 2`
-NOCOLOR=`tput sgr0`
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+NOCOLOR=$(tput sgr0)
 
 SCRIPT_FILE="bootstrap.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/${SCRIPT_FILE}"
