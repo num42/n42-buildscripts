@@ -20,7 +20,7 @@ echo "${GREEN}You can update the script by running "sh ${SCRIPT_FILE} -u"' ${NOC
 if [[ $1 == "-u" ]] ; then
   echo ""
   echo  "${GREEN} Updating ${SCRIPT_FILE} ${NOCOLOR}";
-  curl -L $SCRIPT_SOURCE?"$(date +%s)" -o $0
+  curl -L $SCRIPT_SOURCE?"$(date +%s)" -o "$0"
   exit 1
 fi
 
