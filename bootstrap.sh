@@ -4,9 +4,9 @@
 set -e
 
 # define colors
-RED=`tput setaf 1`
-GREEN=`tput setaf 2`
-NOCOLOR=`tput sgr0`
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+NOCOLOR=$(tput sgr0)
 
 SCRIPT_FILE="bootstrap.sh"
 SCRIPT_SOURCE="https://raw.githubusercontent.com/num42/n42-buildscripts/master/${SCRIPT_FILE}"
@@ -20,11 +20,11 @@ echo "${GREEN}You can update the script by running "sh ${SCRIPT_FILE} -u"' ${NOC
 if [[ $1 == "-u" ]] ; then
   echo ""
   echo  "${GREEN} Updating ${SCRIPT_FILE} ${NOCOLOR}";
-  curl -L $SCRIPT_SOURCE?$(date +%s) -o $0
+  curl -L $SCRIPT_SOURCE?"$(date +%s)" -o "$0"
   exit 1
 fi
 
-if [ \( -e ".env-sample" \) -a \( ! -e ".env" \) ]; then
+if [ \( -e ".env-sample" \) ] && [ \( ! -e ".env" \) ]; then
   echo ""
   echo  "${GREEN} COPYING .env-sample TO .env ${NOCOLOR}";
   cp .env-sample .env
@@ -102,5 +102,5 @@ if [ -e "bootstrap-specialized.sh" ]; then
   echo ""
   echo  "${GREEN} RUNNING SPECIALIZED BOOTSTRAP SCRIPT  ${NOCOLOR}";
 
-  source bootstrap-specialized.sh
+  . bootstrap-specialized.sh
 fi
